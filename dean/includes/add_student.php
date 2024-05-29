@@ -8,21 +8,23 @@
     if(isset($_POST['add_student'])){
         
         $student_id = $_POST['student_id'];
-        $user_id = $_POST['user_id'];
         $student_firstname = $_POST['student_firstname'];
         $student_lastname = $_POST['student_lastname'];
-        $student_password = $_POST['student_password'];
         $student_email = $_POST['student_email'];
         $student_password = $_POST['student_password'];
         $student_major = $_POST['student_major'];
-        $student_image = $_POST['student_image'];
-        $hall_id = $_POST['hall_id'];
+
+
+        $student_image = $_FILES['image']['name'];
+        $student_image_tmp = $_FILES['image']['tmp_name'];
+
+
         $room_number = $_POST['room_number'];
 
 
         //We need a querry to insert the data from the user to the database.
-        $query ="INSERT INTO student(student_id, user_id, student_firstname, student_lastname,  student_email, student_password,  student_major, student_image, hall_id, room_number ) 
-                VALUES ('$student_id','$user_id', '$student_firstname' , '$student_lastname',   '$student_email', '$student_password' , '$student_major' ,  '$student_image', '$hall_id', '$room_number')";
+        $query ="INSERT INTO student(student_id, student_firstname, student_lastname, student_email, student_password, student_major, student_image, room_number) 
+        VALUES ('$student_id', '$student_firstname', '$student_lastname', '$student_email', '$student_password', '$student_major', '$student_image', '$room_number')";       
 
         $add_student_query = mysqli_query($connection,$query);
 
@@ -54,10 +56,6 @@
         <input type="text" class="form-control" name="student_id">
     </div>
 
-    <div class="form-group mb-3">
-        <label for="user_lastname">User ID</label>
-        <input type="text" class="form-control" name="user_id">
-    </div>
 
     <div class="form-group mb-3">
         <label for="title">Firstname</label>
@@ -118,22 +116,37 @@
 
     <div class="form-group mb-3">
         <label for="post_content">Image</label>
-        <input type="text" class="form-control" name="student_image">
+        <input type="file" width="100" class="form-control" name="image">
     </div>
 
 
 
-    <div class="form-group mb-3">
-        <label for="post_content">Hall</label>
-        <input type="text" class="form-control" name="hall_id">
-    </div>
+    <!-- Make a room dynamic -->
+    <div class="form-group dropdown mb-3">
+    <label for="title">Room Number</label>
+			<select name="room_number" id="room_number" class="form-select" aria-label="Disabled select example">
+	<option selected >Select Room:</option>
+	<?php
+	$query = "SELECT * FROM room ";
+	$select_room = mysqli_query($connection,$query);
+
+	while($row = mysqli_fetch_assoc($select_room)){
+		$room_number = $row["room_number"];
+
+		echo "<option value='$room_number'>{$room_number} </option>";
+	}
+	?>
+			</select>
+		</div>
+    <!--  -->
 
 
-    <div class="form-group mb-3">
-        <label for="post_content">Room Number</label>
-        <input type="text" class="form-control" name="room_number">
-    </div>
-
+    <!-- <div class="form-group mb-3">
+        <select class="form-control" name="type" id="type">
+            <option  value="student">User type:</option>
+            <option value="student">Student</option>
+        </select>
+    </div> -->
 
 
 

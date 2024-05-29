@@ -77,7 +77,7 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
                 Student
             </a>
         </li>
-        <li class="sidebar-item">
+        <!-- <li class="sidebar-item">
             <a href="report.php" class="sidebar-link">
                 <i class="fa-solid fa-comment pe-2"></i>
                 Report
@@ -89,7 +89,7 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
                 <i class="fa-solid fa-check pe-2"></i>
                 Worship Attendance
             </a>
-        </li>
+        </li> -->
 
         <!-- <li class="sidebar-item">
           <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
@@ -217,16 +217,16 @@ if ($result) {
 
   <div class="col">
     <div class="card" style="width: 20rem;">
-      <img src="../images/maintenance.png" class="card-img-top" height="90%" alt="" />
+      <img src="../images/user.png" class="card-img-top" height="90%" alt="" />
       <div class="card-body text-end">
-        <h5 class="card-title">Total Plant-Service</h5>
+        <h5 class="card-title">Total All Students</h5>
         <p class="card-text">
 <?php
-$query = "SELECT * FROM plant_service";
+$query = "SELECT * FROM student";
 $result = mysqli_query($connection, $query);
 if ($result) {
-  $total_halls = mysqli_num_rows($result);
-  echo "<span class='info-box-number text-right'><h4>$total_halls</4></span>";
+  $total_student = mysqli_num_rows($result);
+  echo "<span class='info-box-number text-right'><h4>$total_student</4></span>";
 } else {
   echo "Error: ". $sql. "<br>". mysqli_error($connection);
 }
@@ -242,79 +242,7 @@ if ($result) {
 
 
 
-            <div class="row">
-              <div class="col-12 col-md-6 d-flex">
-                <div class="card flex-fill border-0 illustration">
-                  <div class="card-body p-0 d-flex flex-fill">
-                    <div class="row g-0 w-100">
-                      <div class="col-6">
-                        <div class="p-3 m-1">
-                          <h4>Welcome Back, Student</h4>
-                          <p class="mb-0">Student Dashboard, CodzSword</p>
-                        </div>
-                      </div>
-                      <div class="col-6 align-self-end text-end">
-                        <img src="image/customer-support.jpg" class="img-fluid illustration-img" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 d-flex">
-                <div class="card flex-fill border-0">
-                  <div class="card-body py-4">
-                    <div class="d-flex align-items-start">
-                      <div class="flex-grow-1">
-                        <h4 class="mb-2">$ 78.00</h4>
-                        <p class="mb-2">Total Earnings</p>
-                        <div class="mb-0">
-                          <span class="badge text-success me-2"> +9.0% </span>
-                          <span class="text-muted"> Since Last Month </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Table Element -->
-            <div class="card border-0">
-              <div class="card-header">
-                <h5 class="card-title">Basic Table</h5>
-                <h6 class="card-subtitle text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ducimus, necessitatibus reprehenderit itaque!</h6>
-              </div>
-              <div class="card-body">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td colspan="2">Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+         
           </div>
         </main>
             <!-- End of the Content -->

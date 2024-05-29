@@ -4,7 +4,7 @@
 session_start();
 
 // Check if the user has an acces to login to the page
-if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSION["user_role"] != "ms") {
+if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["password_hash"]) || $_SESSION["user_role"] != "ms") {
     // $ps_id_id = $_SESSION["user_id"];
     // Redirect to login page
     header("Location: /dms/index.php");
@@ -65,7 +65,7 @@ while($row = mysqli_fetch_array($select_ps_profile)){
 if (isset($_POST['update_profile'])) {
     $ps_email = $_POST['ps_email'];
     $ps_phonenumber = $_POST['ps_phonenumber'];
-    $ps_password = $_POST['ps_password'];
+    // $ps_password = $_POST['ps_password'];
     if (isset($ps_password)) {
         // Hash password
         $hashed_password = password_hash($ps_password, PASSWORD_DEFAULT);
@@ -126,19 +126,14 @@ if (isset($_POST['update_profile'])) {
             </a>
         </li>
         <li class="sidebar-item">
-          <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
-              aria-expanded="false"><i class="fa-solid fa-building pe-2"></i>
-              Hall
-          </a>
-          <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-              <li class="sidebar-item ps-2">
-                  <a href="hall.php" class="sidebar-link ">View All Halls</a>
-              </li>
-              <li class="sidebar-item ps-2">
-                  <a href="add_hall.php" class="sidebar-link">Add Hall</a>
-              </li>
-          </ul>
-      </li>
+            <a href="hall.php" class="sidebar-link">
+                <i class="fa-solid fa-building pe-2"></i>
+                Hall
+            </a>
+        </li>
+
+
+
 
 
         <li class="sidebar-item">
@@ -154,9 +149,9 @@ if (isset($_POST['update_profile'])) {
                 Report
             </a>
         </li>
+    
 
-
-      <hr size="5" /> 
+      <hr size="5" />
       <li class="sidebar-item">
             <a href="../logout.php" class="sidebar-link">
                 <i class="fa-solid fa-right-from-bracket pe-2"></i>
@@ -248,10 +243,6 @@ if(isset($_SESSION['user_id'])){
         <input type="email" class="form-control" value="<?= $ps_email ?>" name="ps_email">
     </div>
     
-    <div class="form-group mb-3">
-        <label for="post_content">Password</label>
-        <input type="password" class="form-control" value="<?= $ps_password ?>" name="ps_password" required>
-    </div>
 
 
 
@@ -259,6 +250,10 @@ if(isset($_SESSION['user_id'])){
     <div class="form-group mb-3">
         <label for="post_content">Picture</label>
         <input type="file" class="form-control" value="<?= $ps_picture ?>" name="picture">
+    </div>
+
+    <div class="form-group mb-3">
+        <a href="change_password.php">Change Password?</a>
     </div>
 
 

@@ -64,8 +64,8 @@ while($row = mysqli_fetch_array($select_dean_profile)){
       </div>  
       <hr size="5" />
 
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-nav list-unstyled">
+ <!-- Sidebar Menu -->
+ <ul class="sidebar-nav list-unstyled">
         <li class="sidebar-item">
             <a href="index.php" class="sidebar-link">
                 <i class="icon fa-solid fa-gauge pe-2"></i>
@@ -82,28 +82,74 @@ while($row = mysqli_fetch_array($select_dean_profile)){
                   <a href="hall.php" class="sidebar-link ">View All Halls</a>
               </li>
               <li class="sidebar-item ps-2">
-                  <a href="add_hall.php" class="sidebar-link">Add Hall</a>
+                  <a href="hall.php?source=add_hall" class="sidebar-link">Add Hall</a>
               </li>
+              </li>
+              <!-- <li class="sidebar-item ps-2">
+                  <a href="add_hall.php" class="sidebar-link">Room Inspection</a>
+              </li> -->
           </ul>
       </li>
 
-
+        <li class="sidebar-item">
+            <a href="dean.php" class="sidebar-link">
+                <i class="fa-solid fa-user pe-2"></i>
+                Dean
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="room.php" class="sidebar-link">
+                <i class="fa-solid fa-bed pe-2"></i>
+                Room
+            </a>
+        </li>
         <li class="sidebar-item">
             <a href="ms.php" class="sidebar-link">
                 <i class="fa-solid fa-wrench pe-2"></i>
                 Maintenace Service
             </a>
         </li>
-
+        <li class="sidebar-item">
+            <a href="student.php" class="sidebar-link">
+                <i class="fa-solid fa-users pe-2"></i>
+                Student
+            </a>
+        </li>
         <li class="sidebar-item">
             <a href="report.php" class="sidebar-link">
                 <i class="fa-solid fa-comment pe-2"></i>
                 Report
             </a>
         </li>
+        <li class="sidebar-item">
+            <a href="announcement.php" class="sidebar-link">
+                <i class="fa-solid fa-bullhorn pe-2"></i>
+                Announcement
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="handbook.php" class="sidebar-link">
+                <i class="fa-solid fa-book pe-2"></i>
+                Dormitory Handbook
+            </a>
+        </li>
 
+        <!-- <li class="sidebar-item">
+          <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
+              aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
+              Room
+          </a>
+          <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+              <li class="sidebar-item">
+                  <a href="room.php" class="sidebar-link">Room Inspection</a>
+              </li>
+              <li class="sidebar-item">
+                  <a href="#" class="sidebar-link">Facility</a>
+              </li>
+          </ul>
+      </li> -->
 
-      <hr size="5" /> 
+      <hr size="5" />
       <li class="sidebar-item">
             <a href="../logout.php" class="sidebar-link">
                 <i class="fa-solid fa-right-from-bracket pe-2"></i>

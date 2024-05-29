@@ -11,15 +11,12 @@
                     <tr>
                     <th scope="col">No</th>
                     <th scope="col">Student ID</th>
-                    <th scope="col">User ID</th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lasttname</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Password</th>
+                    <!-- <th scope="col">Password</th> -->
                     <th scope="col">Major</th>
-                    <!-- <th scope="col">Nationality</th> -->
                     <th scope="col">Image</th>
-                    <th scope="col">Hall</th>
                     <th scope="col">Room Number</th>
                     <th scope="col">Action</th>
                     </tr>
@@ -34,27 +31,22 @@ $select_student = mysqli_query($connection,$query);
 
 while($row = mysqli_fetch_assoc($select_student)){
     $student_id = $row ['student_id'];
-    $user_id = $row ['user_id'];
     $student_firstname = $row ['student_firstname'];
     $student_lastname = $row ['student_lastname'];
     $student_email = $row ['student_email'];
     $student_password = $row ['student_password'];
     $student_major = $row ['student_major'];
     $student_image = $row ['student_image'];
-    $hall_id = $row ['hall_id'];
     $room_number = $row ['room_number'];
 
     echo "<tr>";
     echo "<td> $i </td>";
     echo "<td> $student_id </td>";
-    echo "<td> $user_id </td>";
     echo "<td> $student_firstname </td>";
     echo "<td> $student_lastname </td>";
     echo "<td> $student_email  </td>";
-    echo "<td> $student_password  </td>";
     echo "<td>  $student_major </td>";
-    echo "<td>  $student_image </td>";
-    echo "<td>  $hall_id </td>";
+    echo "<td>  <img src='../images/$student_image' alt='Picture' width='100'></td>";
     echo "<td>  $room_number </td>";
     echo "<td class='text-center'>
 

@@ -1,10 +1,11 @@
  <!-- Include the header of the dashboard -->
- <?php include '../dashboard/header.php'; ?>
- <?php
+ <?php include '../dashboard/header.php'; 
+
+//  Start the session
 session_start();
 
 // Check if the user has an acces to login to the page
-if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSION["user_role"] != "ms") {
+if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["password_hash"]) || $_SESSION["user_role"] != "ms") {
     // Redirect to login page
     header("Location: /dms/index.php");
     exit;
@@ -36,19 +37,12 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
             </a>
         </li>
         <li class="sidebar-item">
-          <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
-              aria-expanded="false"><i class="fa-solid fa-building pe-2"></i>
-              Hall
-          </a>
-          <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-              <li class="sidebar-item ps-2">
-                  <a href="hall.php" class="sidebar-link ">View All Halls</a>
-              </li>
-              <li class="sidebar-item ps-2">
-                  <a href="add_hall.php" class="sidebar-link">Add Hall</a>
-              </li>
-          </ul>
-      </li>
+            <a href="hall.php" class="sidebar-link">
+                <i class="fa-solid fa-building pe-2"></i>
+                Hall
+            </a>
+        </li>
+
 
 
         <li class="sidebar-item">
@@ -64,6 +58,7 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
                 Report
             </a>
         </li>
+        
 
 
       <hr size="5" /> 
@@ -80,6 +75,8 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
   <!-- End of Navigation Sidebar -->
 
   <div class="main">
+
+
     <!--  Top Bar -->
     <nav class="navbar navbar-expand border-bottom" style="height: 4rem;">
         <div class="navbar-collapse navbar">
@@ -94,10 +91,12 @@ if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSI
 if(isset($_SESSION['user_id'])){
     $profile = $_SESSION['user_id'];
     
-    $query = "SELECT ps_picture FROM plant_service WHERE ps_id = $profile";
+    $query = "SELECT ps_firstname, ps_lastname, ps_picture FROM plant_service WHERE ps_id = $profile";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_assoc($result);
     $ps_picture = $row["ps_picture"];
+    $ps_firstname = $row["ps_firstname"];
+    $ps_lastname = $row["ps_lastname"];
     echo "<img src='../images/". $ps_picture. "' alt='' width='38' height='38'>";
 } else {
     // Display a default profile picture
@@ -129,80 +128,35 @@ if(isset($_SESSION['user_id'])){
           <div class="container-fluid">
             <div class="mb-3">
               <h1>Welcome Back MS</h1>
+              <hr>
             </div>
+          
+
             <div class="row">
-              <div class="col-12 col-md-6 d-flex">
+              <div class="col">
                 <div class="card flex-fill border-0 illustration">
                   <div class="card-body p-0 d-flex flex-fill">
                     <div class="row g-0 w-100">
-                      <div class="col-6">
+                      <div class="col">
                         <div class="p-3 m-1">
-                          <h4>Welcome Back, Student</h4>
-                          <p class="mb-0">Student Dashboard, CodzSword</p>
-                        </div>
-                      </div>
-                      <div class="col-6 align-self-end text-end">
-                        <img src="image/customer-support.jpg" class="img-fluid illustration-img" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 d-flex">
-                <div class="card flex-fill border-0">
-                  <div class="card-body py-4">
-                    <div class="d-flex align-items-start">
-                      <div class="flex-grow-1">
-                        <h4 class="mb-2">$ 78.00</h4>
-                        <p class="mb-2">Total Earnings</p>
-                        <div class="mb-0">
-                          <span class="badge text-success me-2"> +9.0% </span>
-                          <span class="text-muted"> Since Last Month </span>
+                        <h4>Dashboard, <?= htmlspecialchars($ps_firstname). ' '. htmlspecialchars($ps_lastname);?></h4>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- Table Element -->
-            <div class="card border-0">
-              <div class="card-header">
-                <h5 class="card-title">Basic Table</h5>
-                <h6 class="card-subtitle text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ducimus, necessitatibus reprehenderit itaque!</h6>
               </div>
-              <div class="card-body">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td colspan="2">Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <div id="calendar"></div>
+
+
+
+
+
+
+
+
+
           </div>
         </main>
             <!-- End of the Content -->
@@ -219,6 +173,80 @@ if(isset($_SESSION['user_id'])){
 
 
 
+
+
+
+<!-- Calendar -->
+<script src="../fullcalendar/dist/index.global.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+<script type="text/javascript">
+    function getEvent() {
+        var events = new Array();
+
+        $.ajax({
+            type: "POST",
+            url: "../student/function.php?type=list",
+            dataType: "json",
+            success: function(data) {
+                var result = data;
+
+                $.each(result, function(i, item) {
+                    events.push({
+                        id: result[i].id,
+                        title: result[i].title,
+                        url: result[i].link,
+                        start_event: result[i].start_event,
+                        end_event: result[i].end_event,
+                        color: result[i].color
+                    });
+                });
+
+                var calendarEl = document.getElementById("calendar");
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    headerToolbar: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+                    },
+                    initialDate: "<?= date('Y-m-d')?>",
+                    navLinks: true, // can click day/week names to navigate views
+                    businessHours: true, // display business hours
+                    editable: true,
+                    selectable: true,
+                    events: events,
+                    select: function(datetime) {
+                        console.log(datetime);
+                        $('.clear-form').val('');
+                        $('#start_event').val(moment(datetime.start).format('YYYY-MM-DD HH:mm:ss'));
+                $('#end_event').val(moment(datetime.end).format('YYYY-MM-DD HH:mm:ss'));
+                        $('#AddEvent').modal('show');
+                    },
+                });
+
+                calendar.render();
+            }
+        });
+    }
+
+    getEvent();
+
+    $('body').delegate('#SubmitEvent', 'submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "../student/function.php?type=add",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(data) {
+                alert(data.message);
+                $('#AddEvent').modal('hide');
+                getEvent();
+            }
+        });
+    });
+</script>
 
 
  <!-- Include the footer of the dashboard -->

@@ -1,7 +1,17 @@
  <!-- Include the header of the dashboard -->
  <?php include '../dashboard/header.php'; ?>
 
- <?php ob_start(); ?>
+ <?php
+session_start();
+ob_start();
+
+// Check if the user has an acces to login to the page
+if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSION["user_role"] != "dean") {
+    // Redirect to login page
+    header("Location: /dms/index.php");
+    exit;
+}
+?>
 
 
     
@@ -76,9 +86,15 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="worship_attendance.php" class="sidebar-link">
-                <i class="fa-solid fa-check pe-2"></i>
-                Worship Attendance
+            <a href="announcement.php" class="sidebar-link">
+                <i class="fa-solid fa-bullhorn pe-2"></i>
+                Announcement
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="handbook.php" class="sidebar-link">
+                <i class="fa-solid fa-book pe-2"></i>
+                Dormitory Handbook
             </a>
         </li>
         <!-- <li class="sidebar-item">
@@ -110,25 +126,56 @@
   <!-- End of Navigation Sidebar -->
 
   <div class="main">
-    <!--  Top Bar -->
-    <nav class="navbar navbar-expand px-3 border-bottom">
-        <div class="navbar-collapse navbar">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a href="#" data-bs-target="#drop" class="nav-icon pe-md-0">
-                    <img src="../images/aiulogo.png" class="avatar img-fluid rounded" alt="" />
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end ">
-                        <a href="#" class="dropdown-item">Profile</a>
-                        <a href="../logout.php" class="dropdown-item">Logout</a>
-                    </div>
-                </li>
-            </ul>
+   <!--  Top Bar -->
+   <nav class="navbar navbar-expand border-bottom" style="height: 4rem;">
+          <div class="navbar-collapse navbar">
+              <ul class="navbar-nav ms-auto profile-menu"> 
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="profile-pic">
+
+
+  <!--  Profile Picture -->
+  <?php
+  // Check if the ps_picture session variable is set
+  if(isset($_SESSION['user_id'])){
+      $profile = $_SESSION['user_id'];
+      
+      $query = "SELECT dean_firstname, dean_lastname, dean_image FROM dean WHERE dean_id = $profile";
+      $result = mysqli_query($connection, $query);
+      $row = mysqli_fetch_assoc($result);
+      $dean_firstname = $row["dean_firstname"];
+      $dean_lastname = $row["dean_lastname"];
+      $dean_image = $row["dean_image"];
+  
+  if (empty($dean_image)) {
+    echo "<img src='../images/default_profile.png' alt='' width='38' height='38'>";
+  } else {
+    echo "<img src='../images/$dean_image' alt='' width='38' height='38'>";
+  }
+} else {
+  echo "<img src='../images/default_profile.png' alt='' width='38' height='38'>";
+}
+  ?>
+
+
+
+                  </div>
+              <!-- You can also use icon as follows: -->
+                <!--  <i class="fas fa-user"></i> -->
+                </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="dean_profile.php"><i class="fa-solid fa-user pe-2"></i> Profile </a></li>
+                    <!-- <li><a class="dropdown-item" href="#"><i class="fas fa-cog fa-fw"></i> Settings</a></li> -->
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="../logout.php"><i class="fa-solid fa-right-from-bracket pe-2"></i> Log Out</a></li>
+                  </ul>
+            </li>
+        </ul>
         </div>
     </nav>
 
             <!-- End of Top Bar -->
-
 
     <!-- Content Goes here -->
 <main class="content px-3 py-2">    

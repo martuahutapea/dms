@@ -62,24 +62,26 @@ if (isset($_POST['update_room'])) {
 
     <div class="form-group mb-3">
         <label for="title"> <?php echo htmlspecialchars($room_number);?></label>
-        <!-- <input type="text" class="form-control" value="" name="room_number"> -->
+        <input type="text" class="form-control" value="<?= $room_number; ?>" name="room_number" readonly>
     </div>
 
     <!-- Make Status dynamic -->
     <div class="form-group mb-3">
-        <label for="status">Facility:</label><br>
-            <select name="room_facility" id=""  class="form-select mb-3">
-                <option value='<?php echo htmlspecialchars($room_facility);?>'> <?php echo htmlspecialchars($room_facility);?> </option>
-                <?php
-                if($room_facility == 'Ac'){
-                    echo "<option value='Fan'> Fan </option>";
-                }else{
-                    echo "<option value='Ac'> AC </option>";
-                }
-              ?>
-                <option value=''></option>
-            </select>
-        </div>
+    <label for="status">Facility:</label><br>
+    <select name="room_facility" id=""  class="form-select mb-3">
+        <option value='<?php echo htmlspecialchars($room_facility);?>'> <?php echo htmlspecialchars($room_facility);?> </option>
+        <?php
+        if($room_facility == 'Ac'){
+            echo "<option value='Fan'> Fan </option>";
+        } elseif($room_facility == 'Fan'){
+            echo "<option value='Ac'> AC </option>";
+        }else{
+            echo "<option value='Fan'> Fan </option>";
+        } 
+       ?>
+        <option value=''></option>
+    </select>
+</div>
 
         <!-- Make Status dynamic -->
         <div class="form-group mb-3">

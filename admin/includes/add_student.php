@@ -21,10 +21,14 @@
 
         $room_number = $_POST['room_number'];
 
+        $hashed_password = password_hash($student_password, PASSWORD_BCRYPT);
+
+        
+
 
         //We need a querry to insert the data from the user to the database.
         $query ="INSERT INTO student(student_id, student_firstname, student_lastname, student_email, student_password, student_major, student_image, room_number) 
-        VALUES ('$student_id', '$student_firstname', '$student_lastname', '$student_email', '$student_password', '$student_major', '$student_image', '$room_number')";       
+        VALUES ('$student_id', '$student_firstname', '$student_lastname', '$student_email', ' $hashed_password', '$student_major', '$student_image', '$room_number')";       
 
         $add_student_query = mysqli_query($connection,$query);
 

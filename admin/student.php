@@ -1,7 +1,17 @@
  <!-- Include the header of the dashboard -->
  <?php include '../dashboard/header.php'; ?>
 
- <?php ob_start(); ?>
+ <?php
+session_start();
+ob_start();
+
+// Check if the user has an acces to login to the page
+if (!isset($_SESSION["user_id"]) ||!isset($_SESSION["user_password"]) || $_SESSION["user_role"] != "admin") {
+    // Redirect to login page
+    header("Location: /dms/index.php");
+    exit;
+}
+?>
     
 <!-- <div class="wrapper"> -->
 <div class="wrapper">
@@ -64,7 +74,7 @@
                 Student
             </a>
         </li>
-        <li class="sidebar-item">
+        <!-- <li class="sidebar-item">
             <a href="report.php" class="sidebar-link">
                 <i class="fa-solid fa-comment pe-2"></i>
                 Report
@@ -75,7 +85,7 @@
                 <i class="fa-solid fa-check pe-2"></i>
                 Worship Attendance
             </a>
-        </li>
+        </li> -->
         <!-- <li class="sidebar-item">
           <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
               aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>

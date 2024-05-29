@@ -21,14 +21,12 @@
 
         while($row = mysqli_fetch_assoc($select_student_by_id)){
             $student_id = $row["student_id"];
-            $user_id = $row["user_id"];
             $student_firstname = $row["student_firstname"];
             $student_lastname = $row["student_lastname"];
             $student_email = $row["student_email"];
             $student_password = $row["student_password"];
             $student_major = $row["student_major"] ;
             $student_image = $row["student_image"];
-            $hall_id = $row["hall_id"];
             $room_number = $row["room_number"];
     }
 
@@ -39,14 +37,21 @@
 
     if(isset($_POST['update_student'])){   
         $student_id = $_POST['student_id'];
-        $user_id = $_POST['user_id'];
         $student_firstname = $_POST['student_firstname'];
         $student_lastname = $_POST['student_lastname'];
         $student_email = $_POST['student_email'];
         $student_password = $_POST['student_password'];
         $student_major = $_POST['student_major'];
-        $hall_id = $_POST['hall_id'];
+
+        
+        $student_image = $_FILES['image']['name'];
+        $student_image_tmp = $_FILES['image']['tmp_name'];
+
         $room_number = $_POST['room_number'];
+
+
+
+        move_uploaded_file($student_image_tmp, "../images/$student_image");
 
 
         //We need a querry to insert the data from the user to the database.
@@ -68,7 +73,7 @@
         // $query .= "WHERE `student_id` = $the_student_id";
 
 
-        $query = "UPDATE `student` SET student_id = $student_id, user_id = $user_id, student_firstname = '$student_firstname', student_lastname = '$student_lastname', student_email = '$student_email',  student_password = '$student_password', student_major = '$student_major', student_image = '$student_image', hall_id = '$hall_id' , room_number = '$room_number' WHERE `student_id` = $the_student_id";
+        $query = "UPDATE `student` SET student_id = $student_id, student_firstname = '$student_firstname', student_lastname = '$student_lastname', student_email = '$student_email',  student_password = '$student_password', student_major = '$student_major', student_image = '$student_image',  room_number = '$room_number' WHERE `student_id` = $the_student_id";
 
         $update_student_query = mysqli_query($connection,$query);
 
@@ -101,10 +106,6 @@
         <input type="text" class="form-control" value="<?= $student_id ?>" name="student_id">
     </div>
 
-    <div class="form-group mb-3">
-        <label for="user_lastname">User ID</label>
-        <input type="text" class="form-control" value="<?= $user_id ?>" name="user_id">
-    </div>
 
     <div class="form-group mb-3">
         <label for="title">Firstname</label>
@@ -147,21 +148,30 @@
 
     <div class="form-group mb-3">
         <label for="post_content">Image</label>
-        <input type="text" class="form-control" value="<?= $student_image ?>" name="student_image">
+        <input type="file" width="100" class="form-control" value="<?= $student_image ?>" name="image">
     </div>
 
 
-    <div class="form-group mb-3">
-        <label for="post_content">Hall</label>
-        <input type="text" class="form-control" value="<?= $hall_id ?>" name="hall_id">
-    </div>
     
-    
-    <div class="form-group mb-3">
-        <label for="post_content">Room</label>
-        <input type="text" class="form-control" value="<?= $room_number ?>" name="room_number">
-    </div>
 
+    <!-- Make a room dynamic -->
+    <div class="form-group dropdown mb-3">
+    <label for="title">Room Number</label>
+			<select name="room_number" id="room_number" class="form-select" aria-label="Disabled select example"  value="<?= $room_number ?>">
+	<option value="<?= $room_number ?>">Select Room:</option>
+	<?php
+	$query = "SELECT * FROM room ";
+	$select_room = mysqli_query($connection,$query);
+
+	while($row = mysqli_fetch_assoc($select_room)){
+		$room_number = $row["room_number"];
+
+		echo "<option value='$room_number' ". ($room_number == $row['room_number']? 'selected' : ''). ">{$room_number} </option>";
+	}
+	?>
+			</select>
+		</div>
+    <!--  -->
 
 
 

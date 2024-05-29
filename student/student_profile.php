@@ -72,37 +72,33 @@ while($row = mysqli_fetch_array($select_student_profile)){
             </a>
         </li>
         <li class="sidebar-item">
-          <a href="room.php" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse"
-              aria-expanded="false"><i class="fa-solid fa-building pe-2"></i>
-              Hall
-          </a>
-          <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-              <li class="sidebar-item ps-2">
-                  <a href="hall.php" class="sidebar-link ">View All Halls</a>
-              </li>
-              <li class="sidebar-item ps-2">
-                  <a href="add_hall.php" class="sidebar-link">Add Hall</a>
-              </li>
-          </ul>
-      </li>
-
-
-        <li class="sidebar-item">
-            <a href="ms.php" class="sidebar-link">
-                <i class="fa-solid fa-wrench pe-2"></i>
-                Maintenace Service
+            <a href="announcement.php" class="sidebar-link">
+                <i class="fa-solid fa-bullhorn pe-2"></i>
+                Announcement
             </a>
         </li>
 
         <li class="sidebar-item">
+            <a href="inspection.php" class="sidebar-link">
+                <i class="fa-solid fa-clipboard pe-2"></i>
+                Room Inspection
+            </a>
+        </li>
+        <li class="sidebar-item">
             <a href="report.php" class="sidebar-link">
-                <i class="fa-solid fa-comment pe-2"></i>
+                <i class="fa-solid fa-hammer pe-2"></i>
                 Report
             </a>
         </li>
+        <li class="sidebar-item">
+            <a href="handbook.php" class="sidebar-link">
+                <i class="fa-solid fa-book pe-2"></i>
+                Dormitory Handbook
+            </a>
+        </li>
 
 
-      <hr size="5" /> 
+      <hr size="5" />
       <li class="sidebar-item">
             <a href="../logout.php" class="sidebar-link">
                 <i class="fa-solid fa-right-from-bracket pe-2"></i>
@@ -137,11 +133,14 @@ if (isset($_SESSION['user_id'])) {
     $row = mysqli_fetch_assoc($result);
     $student_image = $row["student_image"];
     $student_password = $row["student_password"];
-    echo "<img src='../images/". $student_image. "' alt='' width='38' height='38'>";
-} else {
-    // Display a default profile picture
-    echo "<img src='../images/default_profile.png' alt='' width='38' height='38'>";
-}
+    if (empty($student_image)) {
+        echo "<img src='../images/default_profile.png' alt='' width='38' height='38'>";
+      } else {
+        echo "<img src='../images/$student_image' alt='' width='38' height='38'>";
+      }
+    } else {
+      echo "<img src='../images/default_profile.png' alt='' width='38' height='38'>";
+    }
 ?>
                 </div>
 
@@ -180,19 +179,20 @@ if (isset($_SESSION['user_id'])) {
 
 if (isset($_POST['update_profile'])) {
     $student_email = $_POST['student_email'];
-    $student_password = $_POST['student_password'];
+    // $student_password = $_POST['student_password'];
     $file_name = $_FILES['picture']['name'];
     $file_tmp_name = $_FILES['picture']['tmp_name'];
 
     // Hash the password if a new password was entered
-    if (!empty($student_password)) {
-        $hashed_password = password_hash($student_password, PASSWORD_DEFAULT);
-    } else {
-        // If no new password was entered, use the existing password
-        $hashed_password = $_POST['student_password'];
-    }
-
+    // if (!empty($student_password)) {
+    //     $hashed_password = password_hash($student_password, PASSWORD_DEFAULT);
+    // } else {
+    //     // If no new password was entered, use the existing password
+    //     $hashed_password = $_POST['student_password'];
+    // }
+    // echo($hashed_password);
     // Move the uploaded file to the images directory
+    $hashed_password = MD5($student_password);
     if (!empty($file_name)) {
         move_uploaded_file($file_tmp_name, "../images/$file_name");
     }else {
@@ -230,10 +230,10 @@ if (isset($_POST['update_profile'])) {
         <input type="email" class="form-control" value="<?= $student_email ?>" name="student_email">
     </div>
     
-    <div class="form-group mb-3">
+    <!-- <div class="form-group mb-3">
         <label for="post_content">Password</label>
-        <input type="password" class="form-control" value="<?= $student_password ?>" name="student_password" required>
-    </div>
+        <input type="password" class="form-control" value=" hidden" name="student_password" required>
+    </div> -->
 
 
 
@@ -244,7 +244,9 @@ if (isset($_POST['update_profile'])) {
     </div>
 
 
-
+    <div class="form-group mb-3">
+        <a href="change_password.php">Change Password?</a>
+    </div>
 
 
     <div class="form-group mb-3">

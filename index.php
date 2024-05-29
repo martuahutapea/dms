@@ -78,7 +78,7 @@
 </html>
 
 
-<!-- <script>
+<script>
 window.setTimeout(function() {
 document.getElementById("errorMessage").style.display = "none";
 }, 2000);
@@ -90,4 +90,4 @@ if (document.getElementById("errorMessage")) {
         document.getElementById("errorMessage").style.display = "none";
     }, 2000);
 }
-</script> -->
+</script>

@@ -32,16 +32,12 @@
                 <img src="images/aiulogo.png" width="150" alt="" class="text-center">
             </div>
             <br>
-            <h5 class="text-center">Reset your Password</h5><br>
-            <!-- Username -->
-            <div class="mb-3">
-                <input type="char" name="username" class="form-control" aria-describedby="emailHelp" placeholder="ID" required>
-            </div>
-            <!-- Password -->
-            <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="email" required>
-            </div>
+            <h5 class="text-center">Reset your Password</h5>
+            <br>
 
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
 
             <br>
                 <button type="submit" class="btn btn-primary text-center form-control" name="rest_password">Reset</button>    

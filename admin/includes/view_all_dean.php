@@ -11,7 +11,7 @@
                     <th scope="col">Firstname</th>
                     <th scope="col">Lasttname</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Password</th>
+                    <!-- <th scope="col">Password</th> -->
                     <th scope="col">Phone Number</th>
                     <th scope="col">Office</th>
                     <th scope="col">Image</th>
@@ -44,7 +44,7 @@ while($row = mysqli_fetch_assoc($select_dean)){
     echo "<td> $dean_firstname </td>";
     echo "<td> $dean_lastname </td>";
     echo "<td> $dean_email  </td>";
-    echo "<td> $dean_password </td>";
+ 
     echo "<td> $dean_phonenumber  </td>";
     echo "<td> $dean_office  </td>";
     echo "<td> <img src='../images/$dean_image' alt='Dean Picture' width='100'> </td>";

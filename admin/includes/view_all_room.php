@@ -67,7 +67,7 @@ while($row = mysqli_fetch_assoc($select_room)){
 if(isset( $_GET['delete_room'])){
 
     $room_number = $_GET['delete_room']; 
-    $query = "DELETE FROM room WHERE room_number = '{$room_number}' AND hall_id ='{$hall_id}'";
+    $query = "DELETE FROM room WHERE room_number = '{$room_number}'";
     $delete_room_query = mysqli_query( $connection, $query);
     if($delete_room_query){  
         header( "Location: room.php" );

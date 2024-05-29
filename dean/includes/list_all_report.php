@@ -1,12 +1,12 @@
 
  
 <a href="report.php?source=create_report">
-<button type="button" class="btn btn-primary m-1 float-end"><i class="fa-solid fa-user-plus"></i> New Report </button>
+<button type="button" class="btn btn-primary float-end"><i class="fa-solid fa-user-plus"></i> New Report </button>
 </a>   
  
  
  <!-- Table -->
- <table class="table table-bordered" id="">
+ <table class="table table-bordered mt-3" id="myTable">
                 <thead class="table-success">
                     <tr>
                     <th scope="col">No</th>
@@ -27,7 +27,8 @@
 
 for($i=1; $i>=1000; $i++);
 
-$query = "SELECT * FROM report INNER JOIN student ON report.student_id = student.student_id WHERE report.student_id = " . $_SESSION['username'];
+$query = "SELECT * FROM report INNER JOIN student ON report.student_id = student.student_id ORDER BY report_status ASC";
+// $query = "SELECT * FROM report INNER JOIN student ON report.student_id = student.student_id WHERE status_report = 1";
 $select_report = mysqli_query($connection,$query);
 
 while($row = mysqli_fetch_assoc($select_report)){
@@ -35,19 +36,32 @@ while($row = mysqli_fetch_assoc($select_report)){
     $student_id = $row ['student_id'];
     $report_title = $row ['report_title'];
     $report_desc = $row ['report_desc'];
-    $hall_id = $row ['hall_id'];
+    // $hall_id = $row ['hall_id'];
     $room_number = $row ['room_number'];
     $report_date = $row ['report_date'];
     $report_status = $row ['report_status'];
+    $report_image = $row ['report_image'];
 
+    $status_word ="";
+
+    switch ($report_status){
+        case 0 : $status_word = 'submitted'; break;
+        case 1 : $status_word = 'approved'; break;
+        case 2 : $status_word = 'rejected'; break;
+        case 3 : $status_word = 'progress'; break;
+        case 4 : $status_word = 'pending'; break;
+        case 5 : $status_word = 'completed'; break;
+    
+    }
 
     echo "<tr>";
     echo "<td> $i </td>";
     echo "<td> $report_id </td>";
     echo "<td> $student_id </td>";
     echo "<td> $report_title </td>";
-    echo "<td>  $report_status </td>";
+    echo "<td>  $status_word </td>";
 
+    
 
 
 
@@ -85,15 +99,18 @@ while($row = mysqli_fetch_assoc($select_report)){
             <div class="modal-body text-dark">
             <br>    <br>
             <p class="fw-bold text-dark">Student-Id : <?php echo $student_id; ?></p>
-            <p class="fw-bold">Hall : <?php echo $hall_id; ?></p>
             <p class="fw-bold">Room : <?php echo $room_number; ?></p>
             <p class="fw-bold">Request : <br> <?php echo $report_desc; ?></p>
             <p class="fw-bold">Date : <br> <?php echo $report_date; ?></p>
+            <p class="fw-bold">Image : <img src="<?php echo "../report_image/" .$report_image; ?>" width="25%"></p>
             
+
+    
         ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="report.php?action=approved&report_id=<?= $report_id; ?>">Approved </a>
+                <a href="reason.php?action=rejected&report_id=<?= $report_id; ?>">Rejected <a>
             </div>
         </div>
     </div>

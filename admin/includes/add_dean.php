@@ -17,6 +17,14 @@
 
         $hall_id = $_POST['hall_id'];
 
+//Set the default picture 
+if (isset($_FILES['picture'])) {
+    $dean_image = $_FILES['image']['name'];
+    $dean_image_tmp = $_FILES['image']['tmp_name'];
+    move_uploaded_file($ps_picture_tmp, "../images/$dean_image");
+} else {
+    $ps_picture = 'default_picture.jpg';
+}
 
         //We need a querry to insert the data from the user to the database.
         $query ="INSERT INTO dean (dean_id, dean_firstname, dean_lastname, dean_email, dean_password,  dean_phonenumber, dean_office, dean_image, hall_id ) VALUES ('$dean_id', '$dean_firstname', '$dean_lastname', '$dean_email',  '$dean_password', '$dean_phonenumber', '$dean_office', '$dean_image', '$hall_id')";
@@ -39,7 +47,7 @@ if (!$add_dean_query) {
 
 
 <!-- The enctype in a form allow us to sending differnt form of data because we need a image to be uploaded -->
-<form action="" method="post" enctype="">
+<form action="" method="post" enctype="multipart/form-data">
     <div class="form-group mb-3">
         <label for="title">Dean ID</label>
         <input type="text" class="form-control" name="dean_id">

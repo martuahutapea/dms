@@ -1,12 +1,12 @@
 
  
-<a href="room.php?source=add_room">
+<!-- <a href="room.php?source=add_room">
 <button type="button" class="btn btn-primary m-1 float-end"><i class="fa-solid fa-user-plus"></i> Add Room </button>
-</a>   
+</a>    -->
  
  
  <!-- Table -->
- <table class="table table-bordered" id="">
+ <table class="table table-bordered " id="myTable">
                 <thead class="table-success">
                     <tr>
                     <th scope="col">No</th>
@@ -42,11 +42,10 @@ while($row = mysqli_fetch_assoc($select_room)){
     echo "<td> $hall_id </td>";
 
 
-    echo "<td class='text-center'>
-<a href='room.php?source=edit_room&edit_room={$room_number}' class='text-primary'><i class='fa-solid fa-pen-to-square fa-lg px-2'></i></a>
-<a onClick=\"javascript: return confirm('Are you sure want to delete?')\" href='room.php?delete_room={$room_number}' class='text-danger'><i class='fa-solid fa-trash fa-lg'></i></a>
-    </td>";
 
+    echo "<td class='text-center'>
+    <a href='room.php?source=edit_room&edit_room={$room_number}' class='text-primary'><i class='fa-solid fa-pen-to-square fa-lg px-2'></i></a>
+    </td>";
 
     echo "</tr>";
     $i++;

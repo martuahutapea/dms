@@ -1,7 +1,7 @@
 <?php
 // Include the database
-include '/xampp/Xampp/htdocs/DMS/database/db.php';
-
+include '../database/db.php';
+// session_start();
 
 
 ?>
@@ -29,13 +29,19 @@ include '/xampp/Xampp/htdocs/DMS/database/db.php';
     
     <!-- Custom Dasboard CSS -->
     <link rel="stylesheet" type="text/css" href="../css/navi.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
 
     
 
     <!-- Jquery Datatable -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" /> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css" />
- 
+
+
+    <!-- Calender -->
+    <script src="../fullcalendar/dist/index.global.js"></script>
+
+
+
 
 </head>
 <body>

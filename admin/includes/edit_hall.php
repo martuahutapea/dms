@@ -92,25 +92,28 @@
     </div> -->
 
 
-    <div class="form-group dropdown mb-3">
+
+	
+            <!-- Make a Dean dynamic -->
+            <div class="form-group dropdown mb-3">
     <label for="title">Dean</label>
-			<select name="dean_id" id="dean_id" class="form-select" aria-label="Disabled select example" value="<?= $dean_id ?>" >
-	<option selected >Select Dean:</option>
+			<select name="dean_id" id="dean_id" class="form-select" aria-label="Disabled select example"  value="<?= $dean_id ?>">
+	<option value="<?= $dean_id ?>">Select dean:</option>
 	<?php
 	$query = "SELECT * FROM dean ";
 	$select_dean = mysqli_query($connection,$query);
 
 	while($row = mysqli_fetch_assoc($select_dean)){
 		$dean_id = $row["dean_id"];
-		$dean_firstname = $row["dean_firstname"];
+        $dean_firstname = $row["dean_firstname"];
 		$dean_lastname = $row["dean_lastname"];
 
-		echo "<option value='$dean_id'>{$dean_id} = {$dean_firstname} {$dean_lastname} </option>";
+		echo "<option value='$dean_id' ". ($dean_id == $row['dean_id']? 'selected' : ''). ">{$dean_id} = {$dean_firstname} {$dean_lastname}  </option>";
 	}
 	?>
 			</select>
 		</div>
-	
+    <!--  -->
 
 
 

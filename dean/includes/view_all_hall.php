@@ -4,9 +4,9 @@
 
 <hr>
 
-<a href="hall.php?source=add_hall">
+<!-- <a href="hall.php?source=add_hall">
 <button type="button" class="btn btn-primary m-2 float-end"><i class="fa-solid fa-user-plus"></i> Add New Hall</button>
-</a>  
+</a>   -->
 
 <!-- Table -->
 <table class="table table-bordered mt-5">
@@ -18,8 +18,6 @@
                     <th scope="col">Dean Id</th>
                     <th scope="col">Status</th>
                     <th scope="col">Category</th>
-                    <!-- <th scope="col">View</th> -->
-                    <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,13 +45,6 @@ while($row = mysqli_fetch_assoc($select_hall)){
     echo "<td> $hall_category </td>";
 
 
-
-
-
-    echo "<td class='text-center'>
-<a href='hall.php?source=edit_hall&edit_hall={$hall_id}' class='text-primary'><i class='fa-solid fa-pen-to-square fa-lg px-2'></i></a>
-<a onClick=\"javascript: return confirm('Are you sure want to delete?')\" href='hall.php?delete_hall={$hall_id}' class='text-danger'><i class='fa-solid fa-trash fa-lg'></i></a>
-    </td>";
 
 
     echo "</tr>";

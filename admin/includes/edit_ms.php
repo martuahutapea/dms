@@ -23,7 +23,7 @@
             $ps_id = $row["ps_id"];
             $ps_firstname = $row["ps_firstname"];
             $ps_lastname = $row["ps_lastname"];
-            $ps_password = $row["ps_password"];
+            // $ps_password = $row["ps_password"];
             $ps_email = $row["ps_email"];
             $ps_phonenumber = $row["ps_phonenumber"] ;
             $ps_office = $row["ps_office"];
@@ -40,7 +40,7 @@
         $ps_id = $_POST['ps_id'];
         $ps_firstname = $_POST['ps_firstname'];
         $ps_lastname = $_POST['ps_lastname'];
-        $ps_password = $_POST['ps_password'];
+        // $ps_password = $_POST['ps_password'];
         $ps_email = $_POST['ps_email'];
         $ps_phonenumber = $_POST['ps_phonenumber'];
         $ps_office = $_POST['ps_office'];
@@ -65,7 +65,7 @@
         }
 
 
-        $query = "UPDATE `plant_service` SET ps_id = $ps_id, ps_firstname = '$ps_firstname', ps_lastname = '$ps_lastname', ps_password = '$ps_password', ps_email = '$ps_email', ps_phonenumber = '$ps_phonenumber', ps_office = '$ps_office', ps_picture = '$ps_picture', ps_role = '$ps_role' WHERE `ps_id` = $the_ps_id";
+        $query = "UPDATE `plant_service` SET ps_id = $ps_id, ps_firstname = '$ps_firstname', ps_lastname = '$ps_lastname', ps_email = '$ps_email', ps_phonenumber = '$ps_phonenumber', ps_office = '$ps_office', ps_picture = '$ps_picture', ps_role = '$ps_role' WHERE `ps_id` = $the_ps_id";
 
         $update_ps_query = mysqli_query($connection,$query);
 
@@ -109,11 +109,6 @@
         <input type="text" class="form-control" value="<?= $ps_lastname ?>" name="ps_lastname">
     </div>
 
-    
-    <div class="form-group mb-3">
-        <label for="post_content">Password</label>
-        <input type="password" class="form-control" value="<?= $ps_password ?>" name="ps_password">
-    </div>
 
     <div class="form-group mb-3">
         <label for="post_content">Email</label>

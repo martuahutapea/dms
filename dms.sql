@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2024 at 10:45 AM
+-- Generation Time: May 13, 2024 at 03:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -57,6 +57,19 @@ CREATE TABLE `appointment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `calendar`
+--
+
+CREATE TABLE `calendar` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `start_event` datetime NOT NULL,
+  `end_event` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dean`
 --
 
@@ -81,6 +94,29 @@ INSERT INTO `dean` (`dean_id`, `dean_firstname`, `dean_lastname`, `dean_password
 (1001, 'Richard', 'Rich', '123', 'garix@garix.com', '066635582', 'SC 56', 'default_profile.png', 102, 'dean'),
 (1002, 'Sira', 'yut', 'yuyuyu', 'yu@yu.com', '0586952', 'SB 090', 'default_profile.png', 102, 'dean'),
 (1003, 'Mika', 'mik', 'mimik', 'mik@mik.com', '03459', 'MK 34', 'default_profile.png', 101, 'dean');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `start_event` datetime NOT NULL,
+  `end_event` datetime NOT NULL,
+  `color` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `link`, `start_event`, `end_event`, `color`) VALUES
+(72, 'C', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
+(73, 'b', 'https://google.com', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -142,9 +178,9 @@ CREATE TABLE `report` (
   `student_id` int(11) NOT NULL,
   `report_title` varchar(80) NOT NULL,
   `report_desc` varchar(255) NOT NULL,
-  `report_date` date NOT NULL,
+  `report_date` datetime NOT NULL,
   `report_image` varchar(255) NOT NULL,
-  `report_status` varchar(255) NOT NULL
+  `report_status` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -152,7 +188,11 @@ CREATE TABLE `report` (
 --
 
 INSERT INTO `report` (`report_id`, `student_id`, `report_title`, `report_desc`, `report_date`, `report_image`, `report_status`) VALUES
-(1, 2011, 'test', 'test', '2024-04-22', '', 'in-process');
+(1, 2011, 'test', 'test', '2024-04-22 00:00:00', '', 0),
+(3, 2024001, 'test', 'test', '2024-05-04 00:00:00', '', 1),
+(4, 2024001, 'New report', 'new report', '2024-05-04 08:47:00', '', 0),
+(5, 2024001, 'Test', 'etes', '2024-05-04 08:51:00', '', 2),
+(6, 2024001, 'sdf', 'sdf', '2024-05-04 09:02:00', 'Use Case Diagram.png', 0);
 
 -- --------------------------------------------------------
 
@@ -192,6 +232,27 @@ CREATE TABLE `room_inspection` (
   `room_inspection_desc` varchar(255) NOT NULL,
   `room_number` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedule_list`
+--
+
+CREATE TABLE `schedule_list` (
+  `id` int(30) NOT NULL,
+  `title` text NOT NULL,
+  `description` text NOT NULL,
+  `start_datetime` datetime NOT NULL,
+  `end_datetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule_list`
+--
+
+INSERT INTO `schedule_list` (`id`, `title`, `description`, `start_datetime`, `end_datetime`) VALUES
+(1, 'sdf', 'sdf', '2024-05-10 05:55:00', '2024-05-17 14:56:00');
 
 -- --------------------------------------------------------
 
@@ -250,11 +311,23 @@ ALTER TABLE `appointment`
   ADD PRIMARY KEY (`appointment_id`);
 
 --
+-- Indexes for table `calendar`
+--
+ALTER TABLE `calendar`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dean`
 --
 ALTER TABLE `dean`
   ADD PRIMARY KEY (`dean_id`),
   ADD KEY `hall_id` (`hall_id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `hall`
@@ -284,6 +357,12 @@ ALTER TABLE `room_inspection`
   ADD KEY `room_number` (`room_number`);
 
 --
+-- Indexes for table `schedule_list`
+--
+ALTER TABLE `schedule_list`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -308,10 +387,28 @@ ALTER TABLE `appointment`
   MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `calendar`
+--
+ALTER TABLE `calendar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `schedule_list`
+--
+ALTER TABLE `schedule_list`
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `worship_attendance`

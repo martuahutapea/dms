@@ -134,23 +134,27 @@
 
 
         <!-- Make a hall dynamic -->
-        <div class="form-group dropdown mb-3">
+        <?php
+$hall_id = isset($_GET['hall_id'])? $_GET['hall_id'] : '';
+$query = "SELECT * FROM hall ";
+$select_hall = mysqli_query($connection,$query);
+
+?>
+<div class="form-group dropdown mb-3">
     <label for="title">Hall</label>
-			<select name="hall_id" id="hall_id" class="form-select" aria-label="Disabled select example"  value="<?= $hall_id ?>">
-	<option value="<?= $hall_id ?>">Select hall:</option>
-	<?php
-	$query = "SELECT * FROM hall ";
-	$select_hall = mysqli_query($connection,$query);
+    <select name="hall_id" id="hall_id" class="form-select" aria-label="Disabled select example">
+        <option value="">Select hall:</option>
+        <?php
+        while($row = mysqli_fetch_assoc($select_hall)){
+            $hall_id_db = $row["hall_id"];
+            $hall_name = $row["hall_name"];
 
-	while($row = mysqli_fetch_assoc($select_hall)){
-		$hall_id = $row["hall_id"];
-		$hall_name = $row["hall_name"];
-
-		echo "<option value='$hall_id' ". ($hall_id == $row['hall_id']? 'selected' : ''). ">{$hall_id} ({$hall_name}) </option>";
-	}
-	?>
-			</select>
-		</div>
+            $selected = ($hall_id_db == $hall_id)? 'selected' : '';
+            echo "<option value='$hall_id_db' $selected>{$hall_id_db} ({$hall_name}) </option>";
+        }
+    ?>
+    </select>
+</div>
     <!--  -->
  
 

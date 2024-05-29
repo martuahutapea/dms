@@ -17,28 +17,31 @@ include "database/db.php";
             $error = "Username and password are required.";
         } else {
             // Hash the password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
 
             // Check the from the Plant_service table
-            $query = "SELECT ps_id, ps_password, type FROM plant_service WHERE ps_id =? AND ps_password =?";
+            $query = "SELECT ps_id, ps_password, type FROM plant_service WHERE ps_id =?";
             $stmt = $connection->prepare($query);
-            $stmt->bind_param("ss", $username, $password);
+            $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
-
+            
             if ($result->num_rows == 1) {
-            $user = $result->fetch_assoc();
-            $_SESSION["user_id"] = $user["ps_id"];
-            $_SESSION["user_password"] = $user["ps_password"];
-            $_SESSION["user_role"] = $user["type"];
-
-            if ($user["type"] == "ms") {
-                header("Location: ms/index.php");
-                ob_end_flush();
-                exit;
-                // end of query
-            }
+                $user = $result->fetch_assoc();
+                $hashed_password = $user["ps_password"];
+            
+                if (password_verify($password, $hashed_password)) {
+                    $_SESSION["user_id"] = $user["ps_id"];
+                    $_SESSION["password_hash"] = $hashed_password;
+                    $_SESSION["user_role"] = $user["type"];
+            
+                    if ($user["type"] == "ms") {
+                        header("Location: ms/index.php");
+                        ob_end_flush();
+                        exit;
+                    }
+                }
             } else{
                 // Check the from the Student table
                 $query = "SELECT student_id, student_password, type FROM student WHERE student_id =? AND student_password =?";
@@ -70,6 +73,7 @@ include "database/db.php";
                 if ($result->num_rows == 1) {
                 $user = $result->fetch_assoc();
                 $_SESSION["user_id"] = $user["dean_id"];
+                $_SESSION["dean_id"] = $user["dean_id"];
                 $_SESSION["user_password"] = $user["dean_password"];
                 $_SESSION["user_role"] = $user["type"];
             

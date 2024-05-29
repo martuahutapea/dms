@@ -10,7 +10,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
-                    <th scope="col">Password</th>
+                    <!-- <th scope="col">Password</th> -->
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Office</th>
@@ -43,7 +43,7 @@ while($row = mysqli_fetch_assoc($select_ps)){
     echo "<td> $ps_id </td>";
     echo "<td> $ps_firstname </td>";
     echo "<td> $ps_lastname </td>";
-    echo "<td> $ps_password </td>";
+
     echo "<td> $ps_email  </td>";
     echo "<td> $ps_phonenumber  </td>";
     echo "<td> $ps_office  </td>";

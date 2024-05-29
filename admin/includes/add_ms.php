@@ -1,12 +1,4 @@
 <?php
-session_start();
-// if(!$connection){
-//     die("Connection Failled " .mysqli_connect_error());
-// }else{
-//     echo "we are connected";
-// }
-
-
     if(isset($_POST['add_ms'])){
         
         $ps_id = $_POST['ps_id'];
@@ -26,6 +18,8 @@ session_start();
 
 
         // move_uploaded_file($ps_picture_tmp, "../images/$ps_picture");
+         // Hash the password
+        $hashed_password = password_hash($ps_password, PASSWORD_BCRYPT);
 
 //Set the default picture 
 if (isset($_FILES['picture'])) {
@@ -33,12 +27,12 @@ if (isset($_FILES['picture'])) {
     $ps_picture_tmp = $_FILES['picture']['tmp_name'];
     move_uploaded_file($ps_picture_tmp, "../images/$ps_picture");
 } else {
-    $ps_picture = 'default_picture.jpg';
+    $ps_picture = '../images/default_picture.jpg';
 }
 
 
         //We need a querry to insert the data from the user to the database.
-        $query ="INSERT INTO plant_service (ps_id, ps_firstname, ps_lastname, ps_password, ps_email, ps_phonenumber, ps_office, ps_picture, ps_role ) VALUES ('$ps_id', '$ps_firstname', '$ps_lastname', '$ps_password', '$ps_email', '$ps_phonenumber', '$ps_office', '$ps_picture', '$ps_role')";
+        $query ="INSERT INTO plant_service (ps_id, ps_firstname, ps_lastname, ps_password, ps_email, ps_phonenumber, ps_office, ps_picture, ps_role ) VALUES ('$ps_id', '$ps_firstname', '$ps_lastname', '$hashed_password', '$ps_email', '$ps_phonenumber', '$ps_office', '$ps_picture', '$ps_role')";
         $add_ps_query = mysqli_query($connection,$query);
 
 //Error Handling 
